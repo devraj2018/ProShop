@@ -9,7 +9,6 @@ import {
   Form,
   Button,
   Card,
-  ListGroupItem,
 } from "react-bootstrap";
 import Message from "../components/Message";
 import { addToCart, removeFromCart } from "../actions/cartActions";
@@ -22,7 +21,6 @@ const CartScreen = ({ match, location, history }) => {
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
-
   const { cartItems } = cart;
 
   useEffect(() => {
@@ -34,7 +32,8 @@ const CartScreen = ({ match, location, history }) => {
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
-  const checkoutHandler = (id) => {
+
+  const checkoutHandler = () => {
     history.push("/login?redirect=shipping");
   };
 
@@ -44,7 +43,7 @@ const CartScreen = ({ match, location, history }) => {
         <h1>Shopping Cart</h1>
         {cartItems.length === 0 ? (
           <Message>
-            Your cart is empty<Link to="/">Go Back</Link>
+            Your cart is empty <Link to="/">Go Back</Link>
           </Message>
         ) : (
           <ListGroup variant="flush">
@@ -57,7 +56,7 @@ const CartScreen = ({ match, location, history }) => {
                   <Col md={3}>
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Col>
-                  <Col md={2}>${item.price} </Col>
+                  <Col md={2}>${item.price}</Col>
                   <Col md={2}>
                     <Form.Control
                       as="select"
@@ -90,7 +89,6 @@ const CartScreen = ({ match, location, history }) => {
           </ListGroup>
         )}
       </Col>
-
       <Col md={4}>
         <Card>
           <ListGroup variant="flush">
@@ -104,7 +102,7 @@ const CartScreen = ({ match, location, history }) => {
                 .reduce((acc, item) => acc + item.qty * item.price, 0)
                 .toFixed(2)}
             </ListGroup.Item>
-            <ListGroupItem>
+            <ListGroup.Item>
               <Button
                 type="button"
                 className="btn-block"
@@ -113,7 +111,7 @@ const CartScreen = ({ match, location, history }) => {
               >
                 Proceed To Checkout
               </Button>
-            </ListGroupItem>
+            </ListGroup.Item>
           </ListGroup>
         </Card>
       </Col>
